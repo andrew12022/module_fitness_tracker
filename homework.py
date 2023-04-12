@@ -25,8 +25,8 @@ class Training:
     """Базовый класс тренировки."""
 
     LEN_STEP: float = 0.65
-    M_IN_KM: int = 1000
-    M_IN_H: int = 60
+    M_IN_KM: float = 1000.0
+    M_IN_H: float = 60.0
 
     def __init__(
         self,
@@ -58,14 +58,14 @@ class Training:
             self.duration,
             self.get_distance(),
             self.get_mean_speed(),
-            self.get_spent_calories()
+            self.get_spent_calories(),
         )
 
 
 class Running(Training):
     """Тренировка: бег."""
 
-    CALORIES_MEAN_SPEED_MULTIPLIER: float = 18
+    CALORIES_MEAN_SPEED_MULTIPLIER: float = 18.0
     CALORIES_MEAN_SPEED_SHIFT: float = 1.79
 
     def get_spent_calories(self) -> float:
@@ -82,7 +82,7 @@ class SportsWalking(Training):
 
     K_1: float = 0.035
     K_2: float = 0.029
-    SM_IN_M: int = 100
+    SM_IN_M: float = 100.0
     KMH_IN_MS: float = 0.278
 
     def __init__(
@@ -90,7 +90,7 @@ class SportsWalking(Training):
         action: int,
         duration: float,
         weight: float,
-        height: float
+        height: float,
     ) -> None:
         """Инициализирует свойства класса SportsWalking."""
         self.height = height
@@ -111,7 +111,7 @@ class Swimming(Training):
 
     LEN_STEP: float = 1.38
     MEAN_SW: float = 1.1
-    K_SW: float = 2
+    K_SW: float = 2.0
 
     def __init__(
         self,
@@ -119,7 +119,7 @@ class Swimming(Training):
         duration: float,
         weight: float,
         length_pool: int,
-        count_pool: int
+        count_pool: int,
     ) -> None:
         """Инициализирует свойства класса Swimming."""
         self.length_pool = length_pool
@@ -146,10 +146,10 @@ def read_package(workout_type: str, data: list) -> Training:
     type_training = {
         'SWM': Swimming,
         'RUN': Running,
-        'WLK': SportsWalking
+        'WLK': SportsWalking,
     }
     if workout_type not in type_training:
-        raise Exception(f'Из за ключа {workout_type} возникает ошибка')
+        raise KeyError(f'Из за ключа {workout_type} возникает ошибка')
     else:
         return type_training[workout_type](*data)
 
