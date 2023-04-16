@@ -1,24 +1,27 @@
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 
 
 @dataclass
 class InfoMessage:
     """Информационное сообщение о тренировке."""
+
     training_type: str
     duration: float
     distance: float
     speed: float
     calories: float
 
+    MESSAGE: str = (
+        'Тип тренировки: {training_type}; '
+        'Длительность: {duration:.3f} ч.; '
+        'Дистанция: {distance:.3f} км; '
+        'Ср. скорость: {speed:.3f} км/ч; '
+        'Потрачено ккал: {calories:.3f}.'
+    )
+
     def get_message(self) -> str:
         """Вернуть информационную строку сообщений на экран."""
-        return (
-            f'Тип тренировки: {self.training_type}; '
-            f'Длительность: {self.duration:.3f} ч.; '
-            f'Дистанция: {self.distance:.3f} км; '
-            f'Ср. скорость: {self.speed:.3f} км/ч; '
-            f'Потрачено ккал: {self.calories:.3f}.'
-        )
+        return self.MESSAGE.format(**asdict(self))
 
 
 class Training:
@@ -150,8 +153,7 @@ def read_package(workout_type: str, data: list) -> Training:
     }
     if workout_type not in type_training:
         raise KeyError(f'Из за ключа {workout_type} возникает ошибка')
-    else:
-        return type_training[workout_type](*data)
+    return type_training[workout_type](*data)
 
 
 def main(training: Training) -> None:
