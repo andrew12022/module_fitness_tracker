@@ -47,5 +47,8 @@ pip install -r requirements.txt
 python homework.py
 ```
 
+## Технологии и необходимые инструменты
+- Python
+
 ## Автор
 - [Андрей Елистратов](https://github.com/andrew12022)
